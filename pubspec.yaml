@@ -36,8 +36,7 @@ dependencies:
   # 日期时间
   intl: ^0.18.1
   
-  # JSON序列化
-  json_annotation: ^4.8.1
+
   
   # 后台任务
   workmanager: ^0.5.1
@@ -69,21 +68,7 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
   
-  # JSON代码生成
-  build_runner: ^2.4.7
-  json_serializable: ^6.7.1
+
 
 flutter:
   uses-material-design: true
-
-  assets:
-    - assets/images/
-    - assets/icons/
-    - assets/config/
-
-  fonts:
-    - family: Roboto
-      fonts:
-        - asset: assets/fonts/Roboto-Regular.ttf
-        - asset: assets/fonts/Roboto-Bold.ttf
-          weight: 700
