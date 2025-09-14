@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../main.dart';
+import '../providers/stock_provider.dart';
 import '../widgets/stock_list_widget.dart';
 import '../widgets/summary_card_widget.dart';
 import 'settings_screen.dart';
