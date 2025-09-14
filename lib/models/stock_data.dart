@@ -1,9 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'stock_data.g.dart';
+// 移除 json_annotation 依赖，使用手动序列化
 
 /// 股票K线数据模型
-@JsonSerializable()
 class StockKlineData {
   final String code;        // 股票代码
   final String name;        // 股票名称
@@ -35,10 +32,37 @@ class StockKlineData {
     required this.turnoverRate,
   });
 
-  factory StockKlineData.fromJson(Map<String, dynamic> json) =>
-      _$StockKlineDataFromJson(json);
+  factory StockKlineData.fromJson(Map<String, dynamic> json) => StockKlineData(
+    code: json['code'] as String,
+    name: json['name'] as String,
+    date: DateTime.parse(json['date'] as String),
+    open: (json['open'] as num).toDouble(),
+    high: (json['high'] as num).toDouble(),
+    low: (json['low'] as num).toDouble(),
+    close: (json['close'] as num).toDouble(),
+    volume: (json['volume'] as num).toDouble(),
+    amount: (json['amount'] as num).toDouble(),
+    amplitude: (json['amplitude'] as num).toDouble(),
+    changeRate: (json['changeRate'] as num).toDouble(),
+    changeAmount: (json['changeAmount'] as num).toDouble(),
+    turnoverRate: (json['turnoverRate'] as num).toDouble(),
+  );
 
-  Map<String, dynamic> toJson() => _$StockKlineDataToJson(this);
+  Map<String, dynamic> toJson() => {
+    'code': code,
+    'name': name,
+    'date': date.toIso8601String(),
+    'open': open,
+    'high': high,
+    'low': low,
+    'close': close,
+    'volume': volume,
+    'amount': amount,
+    'amplitude': amplitude,
+    'changeRate': changeRate,
+    'changeAmount': changeAmount,
+    'turnoverRate': turnoverRate,
+  };
 
   /// 从东方财富API数据转换
   factory StockKlineData.fromEastmoneyData(String code, String name, List<String> data) {
@@ -61,7 +85,6 @@ class StockKlineData {
 }
 
 /// 股票基础信息
-@JsonSerializable()
 class StockInfo {
   final String code;
   final String name;
@@ -79,10 +102,23 @@ class StockInfo {
     required this.circulationMarketValue,
   });
 
-  factory StockInfo.fromJson(Map<String, dynamic> json) =>
-      _$StockInfoFromJson(json);
+  factory StockInfo.fromJson(Map<String, dynamic> json) => StockInfo(
+    code: json['code'] as String,
+    name: json['name'] as String,
+    market: json['market'] as String,
+    industry: json['industry'] as String,
+    totalMarketValue: (json['totalMarketValue'] as num).toDouble(),
+    circulationMarketValue: (json['circulationMarketValue'] as num).toDouble(),
+  );
 
-  Map<String, dynamic> toJson() => _$StockInfoToJson(this);
+  Map<String, dynamic> toJson() => {
+    'code': code,
+    'name': name,
+    'market': market,
+    'industry': industry,
+    'totalMarketValue': totalMarketValue,
+    'circulationMarketValue': circulationMarketValue,
+  };
 
   /// 转换为东方财富API的secid格式
   String get secId {
@@ -95,7 +131,6 @@ class StockInfo {
 }
 
 /// 技术分析结果
-@JsonSerializable()
 class AnalysisResult {
   final String code;
   final String name;
@@ -123,14 +158,36 @@ class AnalysisResult {
     required this.score,
   });
 
-  factory AnalysisResult.fromJson(Map<String, dynamic> json) =>
-      _$AnalysisResultFromJson(json);
+  factory AnalysisResult.fromJson(Map<String, dynamic> json) => AnalysisResult(
+    code: json['code'] as String,
+    name: json['name'] as String,
+    analysisDate: DateTime.parse(json['analysisDate'] as String),
+    hasYinBeiLiang: json['hasYinBeiLiang'] as bool,
+    volMultiple: (json['volMultiple'] as num).toDouble(),
+    bandPct: (json['bandPct'] as num).toDouble(),
+    volRatio: (json['volRatio'] as num).toDouble(),
+    breakoutSignal: json['breakoutSignal'] as bool,
+    closeNearHigh: (json['closeNearHigh'] as num).toDouble(),
+    movingAverages: Map<String, double>.from(json['movingAverages'] as Map),
+    score: (json['score'] as num).toDouble(),
+  );
 
-  Map<String, dynamic> toJson() => _$AnalysisResultToJson(this);
+  Map<String, dynamic> toJson() => {
+    'code': code,
+    'name': name,
+    'analysisDate': analysisDate.toIso8601String(),
+    'hasYinBeiLiang': hasYinBeiLiang,
+    'volMultiple': volMultiple,
+    'bandPct': bandPct,
+    'volRatio': volRatio,
+    'breakoutSignal': breakoutSignal,
+    'closeNearHigh': closeNearHigh,
+    'movingAverages': movingAverages,
+    'score': score,
+  };
 }
 
 /// 监控配置参数
-@JsonSerializable()
 class MonitorConfig {
   final double volMult; // 成交量倍数阈值
   final double bandPct; // 压力带百分比
@@ -154,8 +211,27 @@ class MonitorConfig {
     this.topN = 50,
   });
 
-  factory MonitorConfig.fromJson(Map<String, dynamic> json) =>
-      _$MonitorConfigFromJson(json);
+  factory MonitorConfig.fromJson(Map<String, dynamic> json) => MonitorConfig(
+    volMult: (json['volMult'] as num?)?.toDouble() ?? 2.5,
+    bandPct: (json['bandPct'] as num?)?.toDouble() ?? 0.03,
+    volRatioMin: (json['volRatioMin'] as num?)?.toDouble() ?? 1.2,
+    ampMax: (json['ampMax'] as num?)?.toDouble() ?? 0.25,
+    lookback: (json['lookback'] as int?) ?? 30,
+    minAvgAmount20: (json['minAvgAmount20'] as num?)?.toDouble() ?? 2e8,
+    eodBreakMinPct: (json['eodBreakMinPct'] as num?)?.toDouble() ?? 0.005,
+    eodCloseNearHighMin: (json['eodCloseNearHighMin'] as num?)?.toDouble() ?? 0.6,
+    topN: (json['topN'] as int?) ?? 50,
+  );
 
-  Map<String, dynamic> toJson() => _$MonitorConfigToJson(this);
+  Map<String, dynamic> toJson() => {
+    'volMult': volMult,
+    'bandPct': bandPct,
+    'volRatioMin': volRatioMin,
+    'ampMax': ampMax,
+    'lookback': lookback,
+    'minAvgAmount20': minAvgAmount20,
+    'eodBreakMinPct': eodBreakMinPct,
+    'eodCloseNearHighMin': eodCloseNearHighMin,
+    'topN': topN,
+  };
 }
