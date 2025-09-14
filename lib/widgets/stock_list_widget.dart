@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/stock_data.dart';
-import '../utils/themes.dart';
 import 'stock_card_widget.dart';
 
 /// 股票列表组件
