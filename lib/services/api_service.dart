@@ -1,6 +1,4 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
-import 'package:logger/logger.dart';
+// 简化版本，移除复杂依赖
 import '../models/stock_data.dart';
 import 'network_manager.dart';
 import 'database_service.dart';
@@ -13,12 +11,11 @@ class EastmoneyApiService {
 
   final NetworkManager _networkManager = NetworkManager();
   final DatabaseService _databaseService = DatabaseService();
-  final Logger _logger = Logger();
 
   /// 初始化API服务
   Future<void> init() async {
     await _networkManager.init();
-    _logger.i('EastmoneyApiService initialized');
+    print('EastmoneyApiService initialized');
   }
 
   /// 获取股票K线数据
@@ -43,7 +40,7 @@ class EastmoneyApiService {
           final isRecent = now.difference(latestDate).inDays <= 1;
 
           if (isRecent && cachedData.length >= count * 0.8) {
-            _logger.d('Using cached data for $code');
+            print('Using cached data for $code');
             return cachedData;
           }
         }
@@ -96,21 +93,18 @@ class EastmoneyApiService {
 
       return klineDataList;
 
-    } on DioException catch (e) {
-      _logger.e('网络请求失败: ${NetworkErrorHandler.getErrorMessage(e)}');
+    } catch (e) {
+      print('网络请求失败: $e');
 
       // 网络错误时尝试返回缓存数据
-      if (NetworkErrorHandler.isNetworkError(e) && useCache) {
+      if (useCache) {
         final cachedData = await _databaseService.getKlineData(code, limit: count);
         if (cachedData.isNotEmpty) {
-          _logger.w('Network failed, using cached data for $code');
+          print('Network failed, using cached data for $code');
           return cachedData;
         }
       }
 
-      rethrow;
-    } catch (e) {
-      _logger.e('获取K线数据失败: $e');
       rethrow;
     }
   }
@@ -145,7 +139,7 @@ class EastmoneyApiService {
       return diff.cast<Map<String, dynamic>>();
 
     } catch (e) {
-      _logger.e('获取涨停数据失败: $e');
+      print('获取涨停数据失败: $e');
       rethrow;
     }
   }
@@ -182,7 +176,7 @@ class EastmoneyApiService {
       );
 
     } catch (e) {
-      _logger.e('获取股票信息失败: $e');
+      print('获取股票信息失败: $e');
       rethrow;
     }
   }
@@ -212,7 +206,7 @@ class EastmoneyApiService {
       return diff.cast<Map<String, dynamic>>();
 
     } catch (e) {
-      _logger.e('获取实时数据失败: $e');
+      print('获取实时数据失败: $e');
       rethrow;
     }
   }
