@@ -64,14 +64,7 @@ class StockMonitorApp extends StatelessWidget {
             darkTheme: AppThemes.darkTheme,
             themeMode: settingsProvider.themeMode,
             home: const HomeScreen(),
-            builder: (context, child) {
-              return MediaQuery(
-                data: MediaQuery.of(context).copyWith(
-                  textScaleFactor: 1.0, // 固定字体缩放比例
-                ),
-                child: child!,
-              );
-            },
+            // 移除字体缩放限制以避免弃用警告
           );
         },
       ),
