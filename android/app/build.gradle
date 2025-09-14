@@ -91,28 +91,17 @@ android {
         }
         
         release {
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug  // 使用 debug 签名简化构建
             debuggable false
-            minifyEnabled true
-            shrinkResources true
-            
-            // 代码混淆
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            
-            // 生产环境配置
-            buildConfigField "boolean", "DEBUG_MODE", "false"
-            buildConfigField "String", "API_BASE_URL", '"https://push2his.eastmoney.com"'
+            minifyEnabled false  // 禁用代码混淆避免问题
+            shrinkResources false  // 禁用资源压缩
         }
         
         profile {
             signingConfig signingConfigs.debug
             debuggable false
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            
-            buildConfigField "boolean", "DEBUG_MODE", "false"
-            buildConfigField "String", "API_BASE_URL", '"https://push2his.eastmoney.com"'
+            minifyEnabled false
+            shrinkResources false
         }
     }
 
@@ -134,13 +123,10 @@ android {
         abortOnError false
     }
 
-    // 分包配置
+    // 简化分包配置
     splits {
         abi {
-            enable true
-            reset()
-            include 'arm64-v8a', 'armeabi-v7a', 'x86_64'
-            universalApk true
+            enable false  // 禁用 ABI 分包简化构建
         }
     }
 }
@@ -161,22 +147,8 @@ dependencies {
         }
     }
 
-    // AndroidX支持
+    // 简化依赖，只保留必要的
     implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'androidx.activity:activity-compose:1.7.2'
-    
-    // WorkManager
-    implementation 'androidx.work:work-runtime-ktx:2.8.1'
-    
-    // 多dex支持
-    implementation 'androidx.multidex:multidex:2.0.1'
-    
-    // 网络库
-    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
-    
-    // JSON处理
-    implementation 'com.google.code.gson:gson:2.10.1'
     
     // 测试依赖
     testImplementation 'junit:junit:4.13.2'
