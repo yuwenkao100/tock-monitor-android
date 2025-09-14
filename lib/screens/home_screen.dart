@@ -3,9 +3,6 @@ import 'package:provider/provider.dart';
 import '../providers/stock_provider.dart';
 import '../widgets/stock_list_widget.dart';
 import '../widgets/summary_card_widget.dart';
-import 'settings_screen.dart';
-import 'analysis_screen.dart';
-import 'watchlist_screen.dart';
 
 /// 主屏幕 - 底部导航栏布局
 class HomeScreen extends StatefulWidget {
