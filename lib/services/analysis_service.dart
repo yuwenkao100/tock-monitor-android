@@ -59,8 +59,8 @@ class AnalysisService {
     final ma20 = calculateMA(klineData, 20);
     final ma60 = calculateMA(klineData, 60);
     final ma120 = calculateMA(klineData, 120);
-    final vma5 = calculateVMA(klineData, 5);
-    final vma10 = calculateVMA(klineData, 10);
+    // final vma5 = calculateVMA(klineData, 5);  // 暂时未使用
+    // final vma10 = calculateVMA(klineData, 10);  // 暂时未使用
     final vma20 = calculateVMA(klineData, 20);
 
     // 获取最新的移动平均线值
@@ -101,8 +101,8 @@ class AnalysisService {
 
     // 压力带分析
     final bandPct = config.bandPct;
-    final upperBand = latestData.close * (1 + bandPct);
-    final lowerBand = latestData.close * (1 - bandPct);
+    // final upperBand = latestData.close * (1 + bandPct);  // 暂时未使用
+    // final lowerBand = latestData.close * (1 - bandPct);  // 暂时未使用
 
     // 突破信号检查
     bool breakoutSignal = false;
