@@ -4,13 +4,15 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
     
     - name: Setup Java
       uses: actions/setup-java@v4
@@ -27,11 +29,15 @@ jobs:
     - name: Get dependencies
       run: flutter pub get
     
+    - name: Analyze code
+      run: flutter analyze --no-fatal-infos
+    
     - name: Build APK
-      run: flutter build apk --release
+      run: flutter build apk --release --no-shrink
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: stock-monitor-apk
         path: build/app/outputs/flutter-apk/app-release.apk
+        retention-days: 30
