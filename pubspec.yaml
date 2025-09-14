@@ -1,0 +1,89 @@
+name: stock_monitor
+description: 股票技术分析和监控应用
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.17.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI组件
+  cupertino_icons: ^1.0.2
+  material_design_icons_flutter: ^7.0.7296
+  
+  # 状态管理
+  provider: ^6.0.5
+  
+  # 网络请求
+  http: ^0.13.5
+  dio: ^5.3.2
+  
+  # 数据库
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  
+  # 图表
+  fl_chart: ^0.64.0
+  
+  # 本地存储
+  shared_preferences: ^2.2.2
+  
+  # 日期时间
+  intl: ^0.18.1
+  
+  # JSON序列化
+  json_annotation: ^4.8.1
+  
+  # 后台任务
+  workmanager: ^0.5.1
+  
+  # 推送通知
+  flutter_local_notifications: ^16.1.0
+  
+  # 权限管理
+  permission_handler: ^11.0.1
+  
+  # 网络状态检测
+  connectivity_plus: ^5.0.1
+  
+  # 设备信息
+  device_info_plus: ^9.1.0
+  
+  # 文件操作
+  path_provider: ^2.1.1
+  
+  # 加密
+  crypto: ^3.0.3
+  
+  # 日志
+  logger: ^2.0.2+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  
+  # JSON代码生成
+  build_runner: ^2.4.7
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/config/
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
